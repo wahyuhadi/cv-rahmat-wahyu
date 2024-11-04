@@ -1,0 +1,613 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=2 cm, % seperation between body and page edge from the top
+    bottom=2 cm, % seperation between body and page edge from the bottom
+    left=2 cm, % seperation between body and page edge from the left
+    right=2 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 0, 0} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={Rahmat Wahyu},
+    pdfauthor={Rahmat Wahyu},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+\usepackage{ragged2e}
+
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+% Some settings:
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.15cm} % set column seperation
+\pagenumbering{gobble} % no page numbering
+
+\titleformat{\section}{\needspace{4\baselineskip}\fontsize{25}{25}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.3 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0 cm + 0.00001 cm
+    }{
+        0 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for three column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+        \small\color{gray}\textit{Last updated in September 2024}\hspace{\widthof{Last updated in September 2024}}
+    }}}%
+  }%
+}%
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{$|$}
+
+    \begin{header}
+        \fontsize{30 pt}{30 pt}\selectfont Rahmat Wahyu Hadi
+
+        \vspace{5 pt}
+
+        \normalsize
+        \mbox{ Kebon Kacang 41, Jakarta Pusat}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{mailto:hrahmatwahyu@gmail.com}{hrahmatwahyu@gmail.com}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{tel:+6285-2050-39835}{085205039835}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://t.me/rwahyu}{Fast Response Telegram @rwahyu}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://www.linkedin.com/in/rahmat-wahyu-hadi-80a868103/}{linkedin.com/in/rahmat-wahyu-hadi-80a868103/}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://github.com/wahyuhadi}{github.com/wahyuhadi}}%
+    \end{header}
+
+    \vspace{0.1 cm}
+
+
+    \section{About Me}   
+     \vspace{0.35 cm}     
+        \begin{justify}  
+            I'm a software developer and application security specializing in advanced software development, with a strong proficiency in Linux-based environments. My programming experience spans over \textbf{7 years}, primarily in \textbf{Python}, \textbf{GoLang}, and \textbf{R}, with R being my go-to for statistical analysis. My driver development experience has mainly focused on Linux OS, and I'm actively expanding my skill set to keep pace with industry advancements.
+	        In addition to software development, I have a solid background in \textbf{cybersecurity}, particularly in \textbf{Security Engineering, Pentesting, Red Teaming, and DevSecOps}. With a proven track record in application and infrastructure security, my research focuses on security fuzzing techniques, including designing fuzzer payload patterns and occasionally building tools to integrate various security application.
+        \end{justify}
+
+
+    \section{Education}
+   \vspace{0.35 cm}
+        \begin{twocolentry}{
+            \textbf{Sept 2012 – May 2017}
+        }
+            \textbf{Telkom University}, BS in Computer Engineering\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item \textbf{GPA}: 3.1/4.0
+                \item \textbf{Research Project:} \textit{Software Architecture, Computer Architecture, Comparison of Learning Algorithms, Software Reverse Engineering, Cyber Security, OSINT, SIGINT}
+            \end{highlights}
+        \end{onecolentry}
+
+
+
+    
+    \section{Experience}
+          \vspace{0.35 cm}
+        \begin{twocolentry}{\textbf{Aug 2022 – Now}}
+            \textbf{Lead Cyber Security Engineer}, \hrefWithoutArrow{https://astronauts.id}{Astro Quick Commerce} - Work From Home
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{justify}
+            \begin{highlights}
+             \item Conduct thorough, daily penetration testing across company systems and applications to proactively identify vulnerabilities, mitigate potential threats, and strengthen security defenses.
+             
+             \item Continuously monitor system and network logs to identify, analyze, and respond to security incidents in real-time, ensuring rapid action on potential threats.
+             
+             \item Manage and mentor the cybersecurity team by providing guidance, setting goals, assigning tasks, and supporting professional growth, fostering a highly skilled and cohesive unit.
+             
+             \item Collaborate with various departments to help the company achieve and maintain ISO 27001 compliance, leading initiatives to develop, implement, and update robust security policies, procedures, and controls.
+             
+             \item Oversee and conduct comprehensive security awareness training programs for employees at all levels, ensuring they are knowledgeable about the latest security best practices, social engineering tactics, and phishing threats.
+             
+             \item Develop and enforce comprehensive security strategies and frameworks, aimed at protecting sensitive company data, assets, and infrastructure against internal and external threats.
+             
+             \item Coordinate closely with other departments, such as IT, Legal, and Compliance, to ensure all cybersecurity measures align with broader company goals and regulatory requirements.
+             
+             \item Conduct regular risk assessments and security audits to identify, evaluate, and address security risks, thereby maintaining a proactive security posture and ensuring ongoing compliance with regulatory standards.
+             
+             \item Lead and coordinate incident response efforts, providing swift, organized responses to security incidents, minimizing impact and restoring normal operations as efficiently as possible.
+             
+             \item Stay up-to-date with the latest trends, vulnerabilities, tools, and techniques in cybersecurity to ensure the adoption of proactive, cutting-edge security measures that address emerging threats effectively.
+             
+             \item Develop and maintain detailed documentation of all security policies, incident response plans, and cybersecurity procedures to ensure clear, accessible guidelines and continuity in security operations.
+            \end{highlights}
+        \end{justify}
+       	\newpage
+       	
+       	
+       	\begin{twocolentry}{\textbf{Mei 2022 – July 2022}}
+       		\textbf{Senior Cyber Security Engineer}, \hrefWithoutArrow{https://www.instagram.com/finantierco/}{Finantier} - \textbf{SG - Layoff 'Covid19 Black Swan'}
+       	\end{twocolentry}
+	
+		\vspace{0.10 cm}
+		\begin{justify}
+			In 2022, my position was impacted by the economic downturn caused by the COVID-19 pandemic, a 'Black Swan' event that led to widespread disruption across the tech industry, with many startups facing severe challenges. While I had the opportunity to contribute to some key projects, resource constraints limited the scope of my responsibilities. Despite these challenges, I utilized this period to deepen my expertise in critical areas of cybersecurity and to stay agile in a shifting industry landscape.
+			\begin{highlights}
+				\item Conduct thorough, daily penetration testing across company systems and applications to proactively identify vulnerabilities, mitigate potential threats, and strengthen security defenses.
+			
+				
+				\item Develop and enforce comprehensive security strategies and frameworks, aimed at protecting sensitive company data, assets, and infrastructure against internal and external threats.
+			\end{highlights}
+		\end{justify}
+		
+		
+		\begin{twocolentry}{\textbf{Jan 2021 – March 2022}}
+			\textbf{Officer Offensive Security Engineer}, \hrefWithoutArrow{https://www.telkomsel.com/}{Telkomsel} - \textbf{Jakarta, ID}
+		\end{twocolentry}
+		
+		\vspace{0.10 cm}
+		\begin{justify}
+			
+			\begin{highlights}
+			\item Lead DevSecOps implementation by integrating security practices within the development pipeline to ensure robust security throughout the software lifecycle.
+			
+			\item Conduct thorough penetration testing on applications and systems prior to release, identifying potential vulnerabilities to be addressed before deployment.
+			
+			\item Perform detailed code reviews, both manual and automated, using rule-based checks to ensure secure coding standards are met and vulnerabilities are minimized.
+			
+			\item Carry out Cyber Patrol and OSINT activities to proactively monitor the cyber landscape, identify potential threats, and gather intelligence to enhance security awareness.
+			
+			\item Manage third-party vendors and security tools, ensuring they comply with internal security standards and contribute effectively to the organization's cybersecurity posture.
+			
+			\item Investigate and respond to malicious activities within the internal infrastructure, analyzing incidents and implementing remediation steps to prevent future occurrences.
+			
+			\item Develop and maintain security playbooks and incident response plans to standardize procedures and enhance the organization’s readiness for potential security events.
+			
+			
+			
+			\end{highlights}
+		\end{justify}
+
+			\begin{twocolentry}{\textbf{Sept 2019 – Dec 2021}}
+			\textbf{Senior Offensive Security Engineer}, \hrefWithoutArrow{https://tiket.com/}{Tiket.com} - \textbf{Jakarta, ID}
+		\end{twocolentry}
+		
+		\vspace{0.1 cm}
+		\begin{justify}
+			
+			\begin{highlights}
+			\item Perform comprehensive security code reviews to identify potential vulnerabilities and ensure adherence to secure coding practices.
+			
+			\item Oversee the development and change management lifecycle for information systems, implementing security best practices at each stage to maintain a robust security posture.
+			
+			\item Monitor information systems continuously to detect, investigate, and respond to security incidents and vulnerabilities, maintaining a proactive stance against emerging threats.
+			
+			\item Maintain and operate security controls and countermeasures within information systems, ensuring they function effectively to protect sensitive data and infrastructure.
+			
+			\item Conduct regular penetration testing to evaluate system resilience, and provide actionable guidelines and best practices for mitigation based on findings.
+			
+			\item Coordinate with relevant development teams to track and address security bugs, facilitating timely fixes and enhancing overall system security.
+			
+			\item Develop and manage a User Access Matrix (UAM) for monitoring access rights and credentials, ensuring strict control over user permissions and data access.
+			
+			\item Participate in comprehensive security assessments and compliance activities, including PCI DSS, ISO 27001, and OWASP, to ensure organizational standards meet industry and regulatory requirements.
+			
+			\item Deliver security awareness training to new employees, particularly in compliance areas relevant to their roles, fostering a culture of security mindfulness across the team.
+			
+			\item Develop and implement GitHub monitoring (GitMon) to prevent accidental code and credential leaks in public repositories, safeguarding organizational data and intellectual property.
+				
+				
+				
+			\end{highlights}
+		\end{justify}
+        \vspace{0.15 cm}
+
+        \begin{twocolentry}{
+           \textbf{ Aug 2016 – Feb 2019}
+        }
+            \textbf{Software Engineer and Devops}, Gits Indonesia- Bandung ID\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{justify}
+            \begin{highlights}
+               	\item Develop a new Node.js framework tailored for developers, focusing on scalability, performance, and ease of use to enhance development efficiency.
+               	
+               	\item Gather and analyze specifications and requirements in close collaboration with clients to ensure the final product aligns with their business needs and objectives.
+               	
+               	\item Design and build applications based on client requirements, adhering to best practices in coding and ensuring functionality aligns with specifications.
+               	
+               	\item Perform comprehensive testing, including unit, integration, and user acceptance testing, to ensure the system meets quality standards and is ready for release.
+               	
+               	\item Implement CI/CD pipelines to automate deployment processes, streamline updates, and ensure consistent integration and delivery of new code.
+               	
+               	\item Conduct ongoing research into emerging software technologies and industry trends, evaluating their potential application to enhance current projects and innovate within the development team.
+                \item Built an app to compute the similarity of all methods in a codebase, reducing the time from $\mathcal{O}(n^2)$ to $\mathcal{O}(n \log n)$
+                \item Assist with DevOps deployment processes, ensuring seamless integration between development and operations teams for efficient, reliable, and scalable application releases.
+               
+            \end{highlights}
+        \end{justify}
+
+
+
+    
+    \section{Certifications}
+     \vspace{0.35 cm}
+      \begin{samepage}
+    	\begin{twocolentry}{\textbf{1 June 2024}}
+    		\textbf{BSSN }
+    	\end{twocolentry}
+    	
+    	\vspace{0.10 cm}
+    	
+    	\begin{onecolentry}
+    		\mbox{Auditor Keamanan Informasi  Badan Siber Dan Sandi Negara} \end{onecolentry}
+    \end{samepage}
+    
+     \vspace{0.20 cm}
+    \begin{samepage}
+    	\begin{twocolentry}{\textbf{26 Feb 2024}}
+    		\textbf{ISO/IEC 27001:2022}
+    	\end{twocolentry}
+    	
+    	\vspace{0.10 cm}
+    	
+    	\begin{onecolentry}
+    		\mbox{Lead Implementer Training Course} \end{onecolentry}
+    \end{samepage}
+    
+		 \vspace{0.20 cm}
+	     \begin{samepage}
+		\begin{twocolentry}{\textbf{27 Aug 2021}}
+			\textbf{CEH}
+		\end{twocolentry}
+		
+		\vspace{0.10 cm}
+		
+		\begin{onecolentry}
+			\mbox{Certified Ethical Hacker} \end{onecolentry}
+	\end{samepage}
+
+
+          \vspace{0.20 cm}
+        \begin{samepage}
+            \begin{twocolentry}{\textbf{5 Sept 2019}}
+                \textbf{OSCP}
+            \end{twocolentry}
+
+            \vspace{0.10 cm}
+            
+            \begin{onecolentry}
+\mbox{Offensive Security Certification Professional} \end{onecolentry}
+        \end{samepage}
+
+
+    
+    \section{Projects}
+
+
+ \vspace{0.35 cm}
+        
+        \begin{twocolentry}{
+           
+        }
+            \textbf{Nuclei Fuzzing Template}\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Develop automatic for nuclei template to fuzzing by intercept requests 
+                \item Repo: \href{https://github.com/wahyuhadi/nuc-fuzzing-template}{github.com/wahyuhadi/nuc-fuzzing-template}
+                \item Tools Used: Go, Yaml
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+          
+        }
+            \textbf{Nakula - Shellcode enc }\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Shellcode encryption and hiding to bypass Windows Defender 
+                \item Repo: \href{https://github.com/wahyuhadi/nakula}{github.com/wahyuhadi/nakula} 
+                \item Tools Used: python, go, msfvenom
+            \end{highlights}
+        \end{onecolentry}
+
+
+	        \vspace{0.2 cm}
+	
+	\begin{twocolentry}{
+			
+		}
+		\textbf{Kurawa - Droper for Implant Execution }\end{twocolentry}
+	
+	\vspace{0.10 cm}
+	\begin{onecolentry}
+		\begin{highlights}
+			\item Dropper shellcode for execution 
+			\item Repo: \href{https://github.com/wahyuhadi/kurawa}{github.com/wahyuhadi/kurawa} 
+			\item Tools Used: python, Go, msfvenom
+		\end{highlights}
+	\end{onecolentry}
+
+        \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+            
+        }
+            \textbf{Revershell Detection by Proccess}\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Built a UNIX-style process to catch rever shell from interact sh, bash, zsh or shell default
+                \item Repo: \href{https://github.com/wahyuhadi/linux-soc}{github.com/wahyuhadi/linux-soc}
+                \item Tools Used: Go
+            \end{highlights}
+        \end{onecolentry}
+
+
+	\section{Offensive Security Project}
+		  \vspace{0.35 cm}
+		\begin{samepage}
+			\begin{twocolentry}{}{\textbf{Surabaya Industrial Estate Rungkut}}
+			\end{twocolentry}
+
+			\begin{highlights}
+				\item Help SIER in conducting Penetration Testing on the 9 internal applications
+				\item Help SIER in conducting Hardening on internal on-premise
+				\item Help SIER in conducting Secure Code Training to new internal engineering
+			\end{highlights}
+
+		\end{samepage}
+		
+	   \vspace{0.20 cm}
+		\begin{samepage}
+			\begin{twocolentry}{}{\textbf{PT Digital Berkah Mandiri}}
+			\end{twocolentry}
+			
+			\begin{highlights}
+				\item Help PT DBM in conducting Penetration Testing on the application Itwasum Polri
+			\end{highlights}
+		\end{samepage}
+		
+		\vspace{0.20 cm}
+		\begin{samepage}
+			\begin{twocolentry}{}{\textbf{PT Tiga Pilar Maju Mandiri}}
+			\end{twocolentry}
+			
+			\begin{highlights}
+				\item Help PT Tiga Pilar in conducting Penetration Testing on the application Logistik Polri
+				\item Help PT Tiga Pilar creating secure code and infrastructure design
+			\end{highlights}
+		\end{samepage}
+		
+		\vspace{0.20 cm}
+		\begin{samepage}
+			\begin{twocolentry}{}{\textbf{Pusdatin Kemenkes}}
+			\end{twocolentry}
+			
+			\begin{highlights}
+				\item Help Kemenkes in conducting Penetration Testing on the application Covid Antigen
+				\item Implementation Secure Development in application SILACAK
+				\item Help Kemenkes tuning and hardening DHIS2 to improve security
+			\end{highlights}
+		\end{samepage}
+		
+	    \vspace{0.20 cm}
+		\begin{samepage}
+			\begin{twocolentry}{}{\textbf{PT Sentra Vidya Utama}}
+			\end{twocolentry}
+			
+			\begin{highlights}
+				\item Help PT DBM in conducting Penetration Testing on the application Sevima Pay
+				\item Help PT DBM in conducting Penetration Testing on the application Sevima Siakad
+				\item Help PT DBM in conducting Penetration Testing on the application Sevima Edlink
+			\end{highlights}
+		\end{samepage}
+		
+		 \vspace{0.20 cm}
+		\begin{samepage}
+			\begin{twocolentry}{}{\textbf{kata.ai}}
+			\end{twocolentry}
+			
+			\begin{highlights}
+				\item Help kata.ai in conducting Penetration Testing on the application cx.kata.ai
+				\item Help kata.ai in conducting Penetration Testing on the 2 internal applications
+				\item Help kata.ai in designing Secure SDLC
+			\end{highlights}
+		\end{samepage}
+		
+		
+		 \vspace{0.20 cm}
+
+		\begin{samepage}
+			\begin{twocolentry}{}{\textbf{paper.id}}
+			\end{twocolentry}
+			
+			\begin{highlights}
+				\item Help paper.id in conducting Penetration Testing on the application paper.id
+				\item Help paper.id in conducting Secure Code Training to new internal engineering
+			\end{highlights}
+		\end{samepage}
+		 \vspace{0.20 cm}
+		\begin{samepage}
+			\begin{twocolentry}{}{\textbf{PT Pelindo Marine Service}}
+			\end{twocolentry}
+			
+			\begin{highlights}
+				\item Help Pelindo in conducting Penetration Testing on the 2 internal applications
+				\item Help Pelindo in conducting security awareness for 25 employees
+			\end{highlights}
+		\end{samepage}
+		
+		\vspace{0.20 cm}
+		\begin{samepage}
+			\begin{twocolentry}{}{\textbf{PT Gits Indonesia}}
+			\end{twocolentry}
+			
+			\begin{highlights}
+				\item Help GITS in conducting Penetration Testing on the application Merchant Pertamina
+				\item Help GITS in conducting Secure Code Training to backend engineering
+				\item Help GITS in conducting Mobile Pentesting Training to mobile dev engineering
+			\end{highlights}
+		\end{samepage}
+
+		\vspace{0.5cm}
+		\noindent \textbf{** Certain projects are confidential and cannot be disclosed due to NDA agreements **}
+		
+    
+    \section{Technologies}
+
+
+ \vspace{0.35 cm}
+        
+        \begin{onecolentry}
+            \textbf{Languages:} Go, Python, C++, Java, R
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Technologies:} BurpSuite, Zap, Ghidra, Frida
+        \end{onecolentry}
+
+
+    
+
+\end{document}
